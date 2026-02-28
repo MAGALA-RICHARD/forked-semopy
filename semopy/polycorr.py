@@ -9,6 +9,8 @@ from scipy.stats import norm, mvn
 from .utils import cor
 import pandas as pd
 import numpy as np
+from scipy.stats import multivariate_normal
+from scipy.stats import norm
 
 
 def bivariate_cdf(lower: Sequence[float], upper: Sequence[float], corr: float,
@@ -16,7 +18,7 @@ def bivariate_cdf(lower: Sequence[float], upper: Sequence[float], corr: float,
     """
     Estimates an integral of bivariate pdf.
 
-    Estimates an integral of bivariate pdf given integration lower and 
+    Estimates an integral of bivariate pdf given integration lower and
     upper limits. Consider using relatively big (i.e. 20 if using default mean
     and variance) lower and/or upper bounds when integrating to/from infinity.
     Parameters
@@ -38,15 +40,31 @@ def bivariate_cdf(lower: Sequence[float], upper: Sequence[float], corr: float,
         P(lower[0] < x < upper[0], lower[1] < y < upper[1]).
 
     """
+
+    # Covariance matrix
+    cov = np.array([
+        [var[0], corr],
+        [corr, var[1]]
+    ])
+    mvn = multivariate_normal(mean=means, cov=cov)
     s = np.array([[var[0], corr], [corr, var[1]]])
-    return mvn.mvnun(lower, upper, means, s)[0]
+    # Inclusion–exclusion formula for rectangular region
+    return (
+            mvn.cdf(upper)
+            - mvn.cdf([lower[0], upper[1]])
+            - mvn.cdf([upper[0], lower[1]])
+            + mvn.cdf(lower)
+    )
+
+
+# return mvn(lower, upper, means, s)[0]
 
 
 def univariate_cdf(lower, upper, mean=0, var=1):
     """
     Estimate an integral of univariate pdf.
 
-    Estimate an integral of univariate pdf given integration lower and 
+    Estimate an integral of univariate pdf given integration lower and
     upper limits. Consider using relatively big (i.e. 20 if using default mean
     and variance) lower and/or upper bounds when integrating to/from infinity.
     Parameters
@@ -66,7 +84,9 @@ def univariate_cdf(lower, upper, mean=0, var=1):
         P(lower < x < upper).
 
     """
-    return mvn.mvnun([lower], [upper], [mean], [var])[0]
+    return norm.cdf(upper, loc=mean, scale=std) - \
+        norm.cdf(lower, loc=mean, scale=std)
+    # return mvn.mvnun([lower], [upper], [mean], [var])[0]
 
 
 def estimate_intervals(x, inf=10):
@@ -100,7 +120,7 @@ def polyserial_corr(x, y, x_mean=None, x_var=None, x_z=None, x_pdfs=None,
                     y_ints=None, scalar=True):
     """
     Estimate polyserial correlation.
-    
+
     Estimate polyserial correlation between continious variable x and
     ordinal variable y.
     Parameters
