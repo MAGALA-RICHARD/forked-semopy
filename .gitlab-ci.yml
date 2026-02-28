@@ -1,0 +1,23 @@
+image: "python:3.9"
+
+variables:
+  PYTHON: "python3"
+
+before_script:
+  - pip install -r requirements.txt
+  - pip install flake8 pytest
+  - ${PYTHON} -v
+
+stages:
+  - static
+  - tests
+
+static_analysis:
+  stage: static
+  script:
+    - flake8 --extend-ignore=BLK100,E127,E731,E741,W291,W293 --extend-exclude=__init__.py --max-line-length=120 semopy
+
+unit_tests:
+  stage: tests
+  script:
+    - ${PYTHON} -m pytest semopy/tests

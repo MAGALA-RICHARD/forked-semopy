@@ -1,0 +1,20 @@
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+		  <li class="nav-item" role="presentation">
+		    <button class="nav-link active" id="plainfig-tab" data-bs-toggle="tab" data-bs-target="#plainfig" type="button" role="tab" aria-controls="plainfig" aria-selected="true">Omit covariances and estimates</button>
+		  </li>
+		  <li class="nav-item" role="presentation">
+		    <button class="nav-link" id="covfig-tab" data-bs-toggle="tab" data-bs-target="#covfig" type="button" role="tab" aria-controls="covfig" aria-selected="false">Omit covariances</button>
+		  </li>
+		  <li class="nav-item" role="presentation">
+		    <button class="nav-link" id="plainparamfig-tab" data-bs-toggle="tab" data-bs-target="#plainparamfig" type="button" role="tab" aria-controls="plainparamfig" aria-selected="false">Omit estimates</button>
+		  </li>
+		<li class="nav-item" role="presentation">
+		    <button class="nav-link" id="covparamfig-tab" data-bs-toggle="tab" data-bs-target="#covparamfig" type="button" role="tab" aria-controls="covparamfig" aria-selected="false">Show estimates and covariances</button>
+		  </li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+		  <div class="tab-pane fade show active" id="plainfig" role="tabpanel" aria-labelledby="plainfig-tab"><img src="./plots/1.png" class="img-fluid" alt="Model figure with covariances and estimates omitted"></div>
+		  <div class="tab-pane fade" id="covfig" role="tabpanel" aria-labelledby="covfig-tab"><img src="./plots/2.png" class="img-fluid" alt="Model figure with covariances omitted"></div>
+		  <div class="tab-pane fade" id="plainparamfig" role="tabpanel" aria-labelledby="plainparamfig-tab"><img src="./plots/3.png" class="img-fluid" alt="Model figure with estimates omitted"></div>
+		 <div class="tab-pane fade" id="covparamfig" role="tabpanel" aria-labelledby="covparamfig-tab"><img src="./plots/4.png" class="img-fluid" alt="Model figure"></div>
+		</div>

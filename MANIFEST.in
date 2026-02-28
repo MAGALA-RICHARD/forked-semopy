@@ -1,0 +1,7 @@
+include semopy/examples/*.csv
+include semopy/examples/*.txt
+include semopy/examples/*.npy
+include semopy/report/*.html
+include semopy/report/*.txt
+include semopy/report/css/*.css
+include semopy/report/js/*.js
