@@ -122,7 +122,8 @@ def cor(x: np.ndarray):
 
     """
     masked_x = np.ma.array(x, mask=np.isnan(x))
-    cor = np.ma.corrcoef(masked_x, bias=True, rowvar=False).data
+    # seems like bias argument is deprecated with np.ma.corrcoef
+    cor = np.ma.corrcoef(masked_x, rowvar=False).data
     if cor.size == 1:
         cor.resize((1, 1))
     return cor
