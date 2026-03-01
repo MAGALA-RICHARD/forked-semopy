@@ -84,6 +84,8 @@ def univariate_cdf(lower, upper, mean=0, var=1):
         P(lower < x < upper).
 
     """
+    std = np.sqrt(var)
+    #  Replaces deprecated scipy.stats.mvn.mvnun.
     return norm.cdf(upper, loc=mean, scale=std) - \
         norm.cdf(lower, loc=mean, scale=std)
     # return mvn.mvnun([lower], [upper], [mean], [var])[0]
