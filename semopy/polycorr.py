@@ -88,6 +88,7 @@ def univariate_cdf(lower, upper, mean=0, var=1):
     #  Replaces deprecated scipy.stats.mvn.mvnun.
     return norm.cdf(upper, loc=mean, scale=std) - \
         norm.cdf(lower, loc=mean, scale=std)
+    # replaced by the above line
     # return mvn.mvnun([lower], [upper], [mean], [var])[0]
 
 
